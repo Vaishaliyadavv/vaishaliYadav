@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vaishali · AI Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #E31B23;
+      --red-dark: #a81219;
+      --bg: #080808;
+      --card: #0F0F0F;
+      --border: #1E1E1E;
+      --text: #FFFFFF;
+      --muted: #666;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* GRID BG */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      mask-image: radial-gradient(ellipse at 50% 40%, black 0%, transparent 75%);
+      opacity: 0.6;
+    }
+
+    /* ──────── NAV ──────── */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      padding: 22px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'Bebas Neue'; font-size: 30px; letter-spacing: 3px; }
+    .logo span { color: var(--red); }
+    .nav-links { display: flex; gap: 35px; list-style: none; }
+    .nav-links a { color: #666; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; transition: 0.3s; }
+    .nav-links a:hover { color: var(--red); }
+
+    /* Hire Me button + Spider container */
+    .hire-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .nav-cta {
+      padding: 11px 28px;
+      background: var(--red);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+      transition: 0.3s;
+      display: block;
+    }
+    .nav-cta:hover { background: white; color: black; }
+
+    /* Spiderman hanging from Hire Me */
+    .spider-hang {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      z-index: 999;
+      animation: spiderSwing 3s ease-in-out infinite;
+      transform-origin: top center;
+      gap: 0;
+    }
+    .spider-thread {
+      width: 1.5px;
+      height: 70px;
+      background: linear-gradient(to bottom, #888, #444);
+    }
+    .spider-body {
+  width: 60px; /* tweak this: 20–26px is sweet spot */
+
+}
+    @keyframes spiderSwing {
+      0%, 100% { transform: translateX(-50%) rotate(-8deg); }
+      50% { transform: translateX(-50%) rotate(8deg); }
+    }
+    @keyframes spiderWiggle {
+      0%, 100% { transform: rotate(8deg); }
+      50% { transform: rotate(-8deg); }
+    }
+    @keyframes animar {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
+    /* ──────── HERO ──────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 10% 80px;
+      background: radial-gradient(ellipse at 75% 25%, rgba(227,27,35,0.12), transparent 55%);
+      position: relative;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 30px; height: 1px;
+      background: var(--red);
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue';
+      font-size: clamp(4.5rem, 11vw, 9.5rem);
+      line-height: 0.88;
+      margin-bottom: 30px;
+    }
+
+    .hero-title .outline-text {
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.85);
+      font-style: normal;
+    }
+
+    .hero-title .red-accent { color: var(--red); }
+
+    .hero-sub {
+      font-family: 'Syne';
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: #999;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-desc {
+      color: #777;
+      max-width: 480px;
+      font-size: 16px;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .hero-quote {
+      color: var(--red);
+      font-style: italic;
+      font-size: 13px;
+      border-left: 2px solid var(--red);
+      padding-left: 16px;
+      margin-bottom: 48px;
+      max-width: 420px;
+    }
+
+    .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-red {
+      padding: 16px 38px;
+      background: var(--red);
+      color: white;
+      text-decoration: none;
+      font-family: 'Bebas Neue';
+      font-size: 18px;
+      letter-spacing: 2px;
+      transition: 0.3s;
+      display: inline-block;
+      position: relative;
+    }
+    .btn-red:hover { background: #c01019; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(227,27,35,0.35); }
+    .btn-outline {
+      padding: 16px 38px;
+      border: 1px solid #333;
+      color: #aaa;
+      text-decoration: none;
+      font-family: 'Bebas Neue';
+      font-size: 18px;
+      letter-spacing: 2px;
+      transition: 0.3s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: white; color: white; }
+
+    /* floating badge */
+    .hero-badge {
+      position: absolute;
+      right: 10%;
+      bottom: 15%;
+      width: 130px; height: 130px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      animation: rotateBadge 20s linear infinite;
+    }
+    .hero-badge svg {
+      position: absolute;
+      inset: -5px;
+      width: calc(100% + 10px);
+      height: calc(100% + 10px);
+      animation: rotateBadge 20s linear infinite;
+    }
+    @keyframes rotateBadge { to { transform: rotate(360deg); } }
+
+    /* ──────── SECTIONS ──────── */
+    section { padding: 110px 10%; }
+    .section-head { margin-bottom: 70px; }
+    .section-tag {
+      background: var(--red);
+      padding: 4px 14px;
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue';
+      font-size: clamp(48px, 7vw, 72px);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .section-title .outline { color: transparent; -webkit-text-stroke: 1.5px #333; }
+
+    /* ──────── PROJECTS ──────── */
+    .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--border); border: 1px solid var(--border); }
+    .project-card { background: var(--bg); transition: 0.4s; overflow: hidden; position: relative; }
+    .project-card:hover { background: #0d0d0d; }
+    .project-img { width: 100%; height: 260px; object-fit: cover; filter: grayscale(100%) brightness(0.7); transition: 0.5s; display: block; }
+    .project-card:hover .project-img { filter: grayscale(0%) brightness(0.85); }
+    .project-body { padding: 28px 30px; }
+    .project-num { font-family: 'Bebas Neue'; font-size: 48px; color: #1a1a1a; position: absolute; top: 220px; right: 20px; line-height: 1; }
+    .project-name { font-family: 'Bebas Neue'; font-size: 28px; margin-bottom: 8px; letter-spacing: 1px; }
+    .project-desc { color: #666; font-size: 13px; margin-bottom: 20px; line-height: 1.7; }
+    .proj-link {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 1px solid var(--red);
+      padding-bottom: 2px;
+      transition: 0.2s;
+    }
+    .proj-link:hover { color: white; border-color: white; }
+
+    /* ──────── SERVICES ──────── */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border: 1px solid var(--border); }
+    .service-card { background: var(--bg); padding: 50px 40px; transition: 0.3s; position: relative; overflow: hidden; }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--red);
+      transition: 0.4s;
+    }
+    .service-card:hover::after { width: 100%; }
+    .service-card:hover { background: #0d0d0d; }
+    .service-num { font-family: 'Bebas Neue'; font-size: 80px; color: #141414; line-height: 1; }
+    .service-title { font-family: 'Bebas Neue'; font-size: 28px; margin: 10px 0 14px; letter-spacing: 1px; }
+    .service-desc { color: #666; font-size: 13px; line-height: 1.7; }
+    .service-price { color: var(--red); font-weight: 800; margin-top: 24px; display: block; font-size: 18px; font-family: 'Syne'; }
+
+    /* ──────── ABOUT ──────── */
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-text h2 { font-family: 'Bebas Neue'; font-size: clamp(48px, 6vw, 70px); letter-spacing: 2px; margin-bottom: 24px; }
+    .about-text p { color: #777; font-size: 15px; line-height: 1.8; margin-bottom: 16px; }
+    .skills-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .skill-tag {
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #666;
+      transition: 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--red); color: var(--red); }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); }
+    .stat-box { background: var(--bg); padding: 40px; text-align: center; transition: 0.3s; }
+    .stat-box:hover { background: #0d0d0d; }
+    .stat-num { font-family: 'Bebas Neue'; font-size: 64px; color: var(--red); line-height: 1; }
+    .stat-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #555; margin-top: 6px; }
+
+    /* ──────── CONTACT CTA ──────── */
+    .contact-cta-section {
+      background: #050505;
+      padding: 100px 10%;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(227,27,35,0.08), transparent 60%);
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+    }
+    .contact-left h2 {
+      font-family: 'Bebas Neue';
+      font-size: clamp(48px, 6vw, 80px);
+      line-height: 0.9;
+      margin-bottom: 24px;
+    }
+    .contact-left h2 span { color: var(--red); }
+    .contact-left p { color: #666; font-size: 15px; line-height: 1.8; max-width: 380px; }
+
+
+
+    .spider-thread {
+  height: 50px;
+}
+
+
+    .contact-links { display: flex; flex-direction: column; gap: 2px; background: var(--border); border: 1px solid var(--border); }
+    .contact-item {
+      background: var(--bg);
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      text-decoration: none;
+      color: white;
+      transition: 0.3s;
+      border-left: 3px solid transparent;
+    }
+    .contact-item:hover { background: #0d0d0d; border-left-color: var(--red); }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: 0.3s;
+    }
+    .contact-item:hover .contact-icon { border-color: var(--red); background: rgba(227,27,35,0.1); }
+    .contact-icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .contact-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #555; margin-bottom: 4px; }
+    .contact-value { font-size: 15px; font-weight: 500; color: #ddd; }
+
+    /* ──────── FOOTER ──────── */
+    footer {
+      padding: 40px 10%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p { color: #333; font-size: 11px; letter-spacing: 1px; }
+
+    /* ──────── SCROLL REVEAL ──────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ──────── RESPONSIVE ──────── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 6%; }
+      .hero { padding: 120px 6% 60px; }
+      .project-grid, .services-grid, .about-inner, .contact-inner { grid-template-columns: 1fr; }
+      .hero-badge { display: none; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════ NAV ══════ -->
+<nav>
+  <div class="logo">VAI<span>SHALI</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hire-wrap">
+    <a href="#contact" class="nav-cta">Hire Me</a>
+    <!-- Spiderman SVG in website theme colors: dark red / crimson / charcoal -->
+    <div class="spider-hang">
+
+  <img class="spider-body" src="https://i.ibb.co/XDFkXMx/spiderman-colgado.png" alt="">
+</div>
+  </div>
+</nav>
+
+<!-- ══════ HERO ══════ -->
+<section class="hero">
+  <div class="hero-tag reveal">Available for Freelance Work</div>
+
+  <h1 class="hero-title reveal">
+    AI <span class="outline-text">&amp; WEB</span><br>
+    <span class="red-accent">DEVELOPER</span><br>
+    <span style="font-size:0.55em; color:#444; -webkit-text-stroke:0;">+ DESIGNER</span>
+  </h1>
+
+  <p class="hero-desc reveal">I build AI‑powered websites and chatbots that help businesses save time, impress customers, and grow faster.</p>
+
+  <p class="hero-quote reveal">"With great code comes great responsibility." 🕷️</p>
+
+  <div class="btn-group reveal">
+    <a href="#projects" class="btn-red">View My Work</a>
+    <a href="#" class="btn-outline" id="resumeBtn">Download Resume</a>
+  </div>
+
+  <!-- rotating badge -->
+  <div class="hero-badge">
+    <svg viewBox="0 0 140 140">
+      <defs>
+        <path id="circle-path" d="M70,70 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0"/>
+      </defs>
+      <text fill="#333" font-size="11" font-family="DM Sans" font-weight="700" letter-spacing="5">
+        <textPath href="#circle-path">INDIA · AI DEV · WEB DESIGN · CHATBOTS ·</textPath>
+      </text>
+    </svg>
+    <span style="font-size:18px;">🕷️</span>
+  </div>
+</section>
+
+<!-- ══════ PROJECTS ══════ -->
+<section id="projects">
+  <div class="section-head reveal">
+    <span class="section-tag">My Work</span>
+    <h2 class="section-title">LIVE <span class="outline">PROJECTS</span></h2>
+  </div>
+  <div class="project-grid">
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800" class="project-img" alt="Forge Fitness">
+      <div class="project-body">
+        <span class="project-num">01</span>
+        <h3 class="project-name">Forge Fitness</h3>
+        <p class="project-desc">Premium gym website with AI fitness consultant. Membership plans, class schedule, trainer profiles and free trial CTA.</p>
+        <a href="https://gym-demo-omega-silk.vercel.app/" target="_blank" class="proj-link">Live Demo →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800" class="project-img" alt="Prestige Realty">
+      <div class="project-body">
+        <span class="project-num">02</span>
+        <h3 class="project-name">Prestige Realty</h3>
+        <p class="project-desc">Luxury real estate website with AI property consultant. Features listings, agent profile and WhatsApp integration.</p>
+        <a href="https://realestate-demo-opal.vercel.app/" target="_blank" class="proj-link">Live Demo →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800" class="project-img" alt="Le Maison Dorée">
+      <div class="project-body">
+        <span class="project-num">03</span>
+        <h3 class="project-name">Le Maison Dorée</h3>
+        <p class="project-desc">Luxury French restaurant website with AI concierge chatbot. Full menu, reservations via WhatsApp and elegant design.</p>
+        <a href="https://restaurant-demo-nu-neon.vercel.app/" target="_blank" class="proj-link">Live Demo →</a>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800" class="project-img" alt="SmileCare">
+      <div class="project-body">
+        <span class="project-num">04</span>
+        <h3 class="project-name">SmileCare Dental Clinic</h3>
+        <p class="project-desc">AI chatbot that answers patient queries 24/7 in English and Hindi. Handles timings, services, and appointments.</p>
+        <a href="https://web-production-9f4f6.up.railway.app/" target="_blank" class="proj-link">Live Demo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SERVICES ══════ -->
+<section id="services" style="background:#050505; padding-top:110px; padding-bottom:110px;">
+  <div class="section-head reveal">
+    <span class="section-tag">What I Do</span>
+    <h2 class="section-title">MY <span class="outline">SERVICES</span></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <h3 class="service-title">AI Chatbots</h3>
+      <p class="service-desc">Custom AI chatbots for your website or WhatsApp answering customer questions 24/7 — in English and Hindi.</p>
+      <span class="service-price">Starting ₹2,000</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">02</span>
+      <h3 class="service-title">Business Websites</h3>
+      <p class="service-desc">Fast, beautiful, mobile‑friendly websites for restaurants, clinics, gyms, real estate agencies and more.</p>
+      <span class="service-price">Starting ₹5,000</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">03</span>
+      <h3 class="service-title">AI‑Powered Web Apps</h3>
+      <p class="service-desc">Full web applications with AI built in — document analyzers, content generators, and automation tools.</p>
+      <span class="service-price">Starting ₹10,000</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ ABOUT ══════ -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-text reveal">
+      <span class="section-tag">About Me</span>
+      <h2>I AM<br><span style="color:var(--red)">VAISHALI</span></h2>
+      <p>I'm an AI developer and web designer based in India. I build AI‑powered websites and chatbots that help businesses automate customer interactions and look stunning online.</p>
+      <p>I specialize in turning complex ideas into clean, fast, beautiful products that clients and their customers actually love to use.</p>
+      <div class="skills-list">
+        <span class="skill-tag">AI / Claude API</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Flask</span>
+        <span class="skill-tag">WhatsApp API</span>
+        <span class="skill-tag">UI / UX</span>
+        <span class="skill-tag">Vercel</span>
+      </div>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-box">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Live Projects</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Languages</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">AI Support</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Client Focus</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CONTACT ══════ -->
+<section id="contact" class="contact-cta-section">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <div class="contact-spider-wrap">
+        <h2>LET'S<br><span>WORK</span><br>TOGETHER</h2>
+
+
+      </div>
+      <p style="margin-top: 28px;">Have a project in mind? I'm available for freelance work. Let's build something great together.</p>
+    </div>
+
+    <div class="contact-links reveal">
+      <a href="mailto:vaishali.yadavv09@gmail.com" class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">vaishali.yadavv09@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+919876543210" class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.47 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l.82-.82a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+91 98765 43210</div>
+        </div>
+      </a>
+      <a href="https://www.upwork.com/freelancers/vaishali" target="_blank" class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M18.56 13.33A4.93 4.93 0 0 1 14 9.5a4.83 4.83 0 0 1 .08-.87l-2.47 4.14a8.35 8.35 0 0 1-3.14 3.07 6.5 6.5 0 0 1-3.12.79A5.44 5.44 0 0 1 0 11.2a5.44 5.44 0 0 1 5.35-5.43 5.37 5.37 0 0 1 4.5 2.43l1.27-3.71a9.08 9.08 0 0 0-5.77-2 8.67 8.67 0 0 0-5.35 1.8V4.27h3.13V0H0v4.27h.07A8.91 8.91 0 0 0 0 11.2a8.7 8.7 0 0 0 8.68 8.69 9.82 9.82 0 0 0 4.7-1.2 11.43 11.43 0 0 0 3.83-3.8l1.65-2.83a5 5 0 0 0 3.66 1.57A4.93 4.93 0 0 0 27.5 9.5v-.19h-3.09a1.87 1.87 0 0 1-1.85 1.71 1.87 1.87 0 0 1-1.85-1.71h6.79v-1.2a4.93 4.93 0 0 0-4.94-4.94 4.93 4.93 0 0 0-4.94 4.94 4.89 4.89 0 0 0 1.65 3.68z" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Upwork</div>
+          <div class="contact-value">View My Profile →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer>
+  <div class="logo">VAI<span>SHALI</span></div>
+  <p>© 2026 Vaishali · Built with ❤️ and ☕ in India</p>
+</footer>
+
+<script>
+  // ── Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => io.observe(r));
+  // make hero reveals instant on load
+  setTimeout(() => {
+    document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
+  }, 100);
+
+  // ── Resume PDF (jsPDF CDN)
+  document.getElementById('resumeBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    // dynamically load jsPDF
+    if (!window.jsPDF) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      document.head.appendChild(script);
+      await new Promise(res => script.onload = res);
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(32);
+    doc.setTextColor(227, 27, 35);
+    doc.text('HELLO I AM THE PDF', 20, 60);
+    doc.save('vaishali-resume.pdf');
+  });
+</script>
+</body>
+</html>
